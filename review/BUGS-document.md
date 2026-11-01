@@ -18,3 +18,11 @@ What it is: "Document" embed block by EmbedPress (version 1.1.0). It embeds a PD
 - Read the code only, unless a finding says "Verified". No automated tests exist in this repo.
 - Chrome-only and WordPress 7.1.3 on Local where something was run.
 - Last commit is 2022; I did not check whether this plugin is still shipped.
+
+## Fix branch
+Branch `fix/pdf-selector-and-office-url`, pushed to the fork `suhaeel/document`. Based on the default branch; the default branch itself is untouched.
+
+Encodes the file URL for the Office viewer (`encodeURIComponent`), keeps the old save output as a block deprecation, and embeds PDFs in `componentDidUpdate` once the block has rendered with its `href` and `id`.
+
+Tested: for an Office file with `?token=1&expires=2` the old iframe `src` ended the file URL at `token=1` and left `expires=2` outside it; the new one encodes the whole URL. The deprecated save output is identical to the old output for all 3 sample blocks, so existing posts stay valid. `edit.js` and `index.js` compile. PDF output is unchanged.
+**`build/` was not regenerated** (it is committed in this repo and needs `@wordpress/scripts` 12, which wants an older Node). Run `npm run build` before using this branch, then check the editor by choosing a PDF and an Office file.
